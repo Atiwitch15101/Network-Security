@@ -1,67 +1,60 @@
-# netstat command
+# FTP
 
-## 1. ใช้คำสั่ง netstat เพื่อแสดงการเชื่อมต่อทั้งหมดของผู้ใช้ 
+> FTP (File Transfer Protocol) คือ server สำหรับการฝาก file และสำหรับการเป็นที่พัก file ให้ผู้อื่นมา download โดยใน lab นี้เราจะทำการเข้าถึง FTP Server ด้วย anonymous user ซึ่งเป็น user ที่เป็น user สำหรับบุคคลภายนอก ซึ่งมีหลายๆครั้งที่การอนุญาตให้บุคคลภายนอกดังกล่าวเข้าถึงได้กลายเป็นข้อมูลรั่วไหลจากจุดดังกล่าว
 
-> คำสั่ง netstat ใน Kali Linux ใช้สำหรับแสดงข้อมูลเกี่ยวกับการเชื่อมต่อเครือข่าย, routing tables, interface statistics, masquerade connections, และ multicast memberships โดยสามารถดูสถานะการเชื่อมต่อทั้ง TCP, UDP, และ UNIX sockets ได้ เป็นเครื่องมือที่ช่วยในการตรวจสอบและแก้ไขปัญหาเครือข่ายได้อย่างมีประสิทธิภาพ
+### ตัวอย่างการใช้งาน
 
-```
-sudo netstat -tulnp
-```
+> หาไฟล์ flag โดยการเข้าถึง FTP Server IP `149.28.159.195` ด้วย user anonymous user
 
-> [!NOTE]
-> - `-t` แสดงการเชื่อมต่อ TCP
-> - `-u` แสดงการเชื่อมต่อ UDP
-> - `-l` แสดงพอร์ตที่เปิดใช้งานการรับฟัง (listening)
-> - `-n` แสดงหมายเลขพอร์ตแทนชื่อ
-> - `-p` แสดงโปรแกรมที่ใช้พอร์ตนั้น
+- 1 เชื่อมต่อไปยัง FTP server
 
-### ตัวอย่างผลลัพธ์
-
-![Screenshot 2024-05-27 152020](https://github.com/Atiwitch15101/Linux-Knowledge/assets/159407312/27881231-6103-4254-85e7-c731a4afd2ed)
-
-## 2. ค้นหาพอร์ตที่เว็บเซิร์ฟเวอร์ทำงานอยู่ (จากตัวอย่างข้างต้นพอร์ต 4200 และ 8481)
-
-> จากผลลัพธ์ เราเห็นว่ามีการใช้พอร์ต 4200 และ 8481 สำหรับเว็บเซิร์ฟเวอร์ โดยพอร์ต 4200 ใช้โดย Angular CLI และพอร์ต 8481 ไม่ได้ถูกกำหนดตายตัว อาจใช้โดยแอปพลิเคชันหรือบริการที่กำหนดเอง เช่น แอปพลิเคชันเว็บหรือบริการเฉพาะทางบางอย่าง
-
-## 3. เชื่อมต่อไปยังบริการเว็บเซิร์ฟเวอร์ที่ทำงานอยู่บน localhost เพื่อค้นหา flag:
-
-> ใช้ `curl` เพื่อส่งคำขอ HTTP ไปยังพอร์ตที่ระบุ
-
-> ตัวอย่างเชื่อมต่อกับพอร์ต 8481
+> ใช้คำสั่ง ftp เพื่อเชื่อมต่อไปยัง FTP server ที่ IP: 149.28.159.195 ด้วย user anonymous
 
 ```
-curl http://127.0.0.1:8481
+ftp 149.28.159.195
 ```
 
-### ตัวอย่างผลลัพธ์
+- 2 เข้าสู่ระบบด้วย user anonymous
 
-![Screenshot 2024-05-27 152700](https://github.com/Atiwitch15101/Linux-Knowledge/assets/159407312/392bb003-8b6e-4230-ba4c-d38d1b5d5fff)
-
-## 4. ใช้คำสั่ง `curl` เพื่อดาวน์โหลดไฟล์ `flag_YjNmZ.txt`
-
-> หากคุณพบลิงก์ `<li><a href="flag_OGRhY.txt">flag_OGRhY.txt</a></li>` ในผลลัพธ์ที่ได้จากการใช้ curl หรือการเรียกดูหน้าเว็บของเว็บเซิร์ฟเวอร์
-
-### ตัวอย่างการใช้ curl
+> เมื่อระบบถาม username ให้ป้อน "anonymous"
 
 ```
-curl http://127.0.0.1:8481/flag_OGRhY.txt -o flag_OGRhY.txt
+Name (149.28.159.195:yourusername): anonymous
 ```
 
-### ตัวอย่างผลลัพธ์
-
-![Screenshot 2024-05-27 160413](https://github.com/Atiwitch15101/Linux-Knowledge/assets/159407312/f958d7a5-722f-493c-9aa9-03f62777c456)
-
-## 5. อ่านเนื้อหาของไฟล์ `flag_YjNmZ.txt`
-
-> คุณสามารถดาวน์โหลดหรือเปิดไฟล์นี้โดยใช้คำสั่ง curl หรือ wget เพื่อตรวจสอบเนื้อหาของไฟล์ flag_OGRhY.txt
-
-### ตัวอย่างการใช้ cat
+> สำหรับ password ให้ใช้เป็น email address ของคุณหรือสามารถกด Enter ทันที (ส่วนมากเซิร์ฟเวอร์ FTP สำหรับ anonymous login จะไม่ตรวจสอบ password จริงจัง) 
 
 ```
-cat flag_YjNmZ.txt
+331 Please specify the password.
+Password: [Press Enter]
 ```
 
-### ตัวอย่างผลลัพธ์
+- 3 ตรวจสอบและค้นหาไฟล์
 
-![Screenshot 2024-05-27 161026](https://github.com/Atiwitch15101/Linux-Knowledge/assets/159407312/f71de231-d553-4b3c-b584-05f5104dd722)
+> หลังจากเข้าสู่ระบบสำเร็จ ใช้คำสั่ง `ls` หรือ `dir` เพื่อดูรายการไฟล์และไดเรกทอรี:
+
+```
+ftp> ls
+```
+
+- 4 ดาวน์โหลดไฟล์ flag
+
+> เมื่อพบไฟล์ flag ให้ใช้คำสั่ง `get` เพื่อดาวน์โหลดไฟล์
+
+```
+ftp> get flag_[[RANDOM]].txt
+```
+
+- 5 ออกจาก FTP server
+
+> เมื่อเสร็จสิ้นการทำงาน ออกจาก FTP server โดยใช้คำสั่ง `bye` หรือ `quit`
+
+```
+ftp> bye
+```
+
+### ผลลัพธ์
+
+![Screenshot 2024-05-30 162653](https://github.com/Atiwitch15101/Network-Security/assets/159407312/087d80e7-341c-47de-b4da-ee2d80b88918)
+
 
