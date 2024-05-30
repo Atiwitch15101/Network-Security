@@ -12,7 +12,7 @@
 
 1. ติดตั้ง Net-SNMP
    
-  หากยังไม่ได้ติดตั้ง Net-SNMP, ให้ติดตั้งโดยใช้คำสั่งต่อไปนี้
+   - หากยังไม่ได้ติดตั้ง Net-SNMP, ให้ติดตั้งโดยใช้คำสั่งต่อไปนี้
 
 ```
 sudo apt-get update
@@ -21,7 +21,7 @@ sudo apt-get install snmp
 
 2. ใช้ `snmpwalk` ดึงข้อมูล
 
-  ใช้คำสั่ง `snmpwalk` เพื่อดึงข้อมูลจาก SNMP service. โดยทั่วไปจะต้องรู้ community string ซึ่งค่าเริ่มต้นคือ "public"
+   - ใช้คำสั่ง `snmpwalk` เพื่อดึงข้อมูลจาก SNMP service. โดยทั่วไปจะต้องรู้ community string ซึ่งค่าเริ่มต้นคือ "public"
 
 ```
 snmpwalk -v 2c -c public 149.28.159.195:161
