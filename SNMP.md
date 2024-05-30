@@ -22,7 +22,6 @@ snmpwalk -v 2c -c public 149.28.159.195
 ```
 
 `v 2c` กำหนดให้ใช้ SNMP เวอร์ชัน 2c
-
 `c public` กำหนด community string เป็น "public" ซึ่งเป็นค่าเริ่มต้นทั่วไป
 
 ### ผลลัพธ์
